@@ -1,6 +1,6 @@
 # Cetronome
 
-It's like the metronome that I made in Python, but this time it's in C..
+It's like the metronome that I made in [Python](https://github.com/joshnsolomon/metronome), but this time it's in C..
 
 Get it? ..Cetronome
 
