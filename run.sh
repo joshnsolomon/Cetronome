@@ -1,3 +1,3 @@
 #!/bin/bash
 
-gcc main.c -o app -lSDL2 && ./app
+gcc main.c met.c -o app -lSDL2 && ./app
