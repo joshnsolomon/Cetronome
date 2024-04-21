@@ -6,8 +6,9 @@
 
 struct Met_t{
     SDL_Window* window;
-    SDL_Surface* screenSurface;
     SDL_Event* e;
+    SDL_Renderer* renderer;
+    SDL_Texture* dog;
 };
 
 typedef struct Met_t Met;
@@ -17,5 +18,7 @@ int  setup(Met* met);
 int  draw(Met* met);
 bool eventHandle(Met* met);
 int leave(Met* met);
+
+SDL_Rect drawDog(Met* met);
 
 #endif
