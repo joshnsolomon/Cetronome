@@ -44,8 +44,8 @@ SDL_Rect drawDog(Met* met){
     SDL_QueryTexture(met->dog, NULL, NULL, &w, &h);
 
     SDL_Rect texr;
-    texr.x = SCREEN_WIDTH/2;
-    texr.y = SCREEN_HEIGHT/2;
+    texr.x = SCREEN_WIDTH/2-w/2;
+    texr.y = SCREEN_HEIGHT/2-h/2;
     texr.w = w;
     texr.h = h;
 
