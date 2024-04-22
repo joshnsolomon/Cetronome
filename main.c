@@ -10,7 +10,7 @@ int main(int argc, char* args[]){
     
     //initialize stuff for met
     SDL_Window* window;
-    SDL_Event* e;
+    SDL_Event e;
     SDL_Renderer* renderer;
     SDL_Texture* dog;
     Met newMet = {.window = window, .e = e, .renderer = renderer, 

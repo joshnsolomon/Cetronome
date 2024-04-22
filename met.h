@@ -6,7 +6,7 @@
 
 struct Met_t{
     SDL_Window* window;
-    SDL_Event* e;
+    SDL_Event e;
     SDL_Renderer* renderer;
     SDL_Texture* dog;
 };

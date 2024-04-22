@@ -54,16 +54,16 @@ int drawDog(Met* met){
 }
 
 bool eventHandle(Met* met){
-    SDL_WaitEvent(met->e);
+    SDL_WaitEvent(&(met->e));
     bool output = false;
 
-    if(met->e->type == SDL_QUIT){
+    if(met->e.type == SDL_QUIT){
         output |= true;
     }
-    if(met->e->type == SDL_KEYDOWN){
+    if(met->e.type == SDL_KEYDOWN){
         output |= true;
     }
-    if(met->e->type == SDL_MOUSEBUTTONDOWN){
+    if(met->e.type == SDL_MOUSEBUTTONDOWN){
         output |= true;
     }
 
