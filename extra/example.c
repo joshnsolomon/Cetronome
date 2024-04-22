@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
         0, &window, &renderer
     );
     IMG_Init(IMG_INIT_PNG);
-    texture = IMG_LoadTexture(renderer, "dogs.png");
+    texture = IMG_LoadTexture(renderer, "../images/dogs.png");
     while (1) {
         SDL_RenderCopy(renderer, texture, NULL, NULL);
         SDL_RenderPresent(renderer);

@@ -22,11 +22,9 @@ int main(int argc, char* args[]){
     //main loop
     bool quit = false;
     while (!quit){
-        quit = eventHandle(met);
         draw(met);
+        quit = eventHandle(met);
     }
     
-    int output = leave(met);
-    
-    return output;
+    return leave(met);
 }

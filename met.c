@@ -10,6 +10,8 @@ int setup(Met* met){
         return -1;
     }
 
+    IMG_Init(IMG_INIT_PNG);
+
 
     met->window = SDL_CreateWindow(
             "Cetronome",
@@ -70,6 +72,7 @@ bool eventHandle(Met* met){
 
 int leave(Met* met){
     SDL_DestroyTexture(met->dog);
+    IMG_Quit();
     SDL_DestroyRenderer(met->renderer);
     SDL_DestroyWindow(met->window);
     SDL_Quit();
