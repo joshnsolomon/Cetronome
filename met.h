@@ -19,6 +19,6 @@ int  draw(Met* met);
 bool eventHandle(Met* met);
 int leave(Met* met);
 
-SDL_Rect drawDog(Met* met);
+int drawDog(Met* met);
 
 #endif

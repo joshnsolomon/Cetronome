@@ -10,7 +10,6 @@ int setup(Met* met){
         return -1;
     }
 
-    IMG_Init(IMG_INIT_PNG);
 
     met->window = SDL_CreateWindow(
             "Cetronome",
@@ -32,14 +31,12 @@ int setup(Met* met){
 int draw(Met* met){
     SDL_RenderClear(met->renderer);
 
-    SDL_Rect texr = drawDog(met);
-    SDL_RenderCopy(met->renderer, met->dog, NULL, &texr);
-
+    drawDog(met);
 
     SDL_RenderPresent(met->renderer);
 }
 
-SDL_Rect drawDog(Met* met){
+int drawDog(Met* met){
     int w, h;
     SDL_QueryTexture(met->dog, NULL, NULL, &w, &h);
 
@@ -49,11 +46,13 @@ SDL_Rect drawDog(Met* met){
     texr.w = w;
     texr.h = h;
 
-    return texr;
+    SDL_RenderCopy(met->renderer, met->dog, NULL, &texr);
+
+    return 0;
 }
 
 bool eventHandle(Met* met){
-    SDL_PollEvent(met->e);
+    SDL_WaitEvent(met->e);
     bool output = false;
 
     if(met->e->type == SDL_QUIT){

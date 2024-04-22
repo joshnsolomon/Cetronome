@@ -26,5 +26,7 @@ int main(int argc, char* args[]){
         draw(met);
     }
     
-    return leave(met);
+    int output = leave(met);
+    
+    return output;
 }
