@@ -33,7 +33,7 @@ int draw(Met* met){
     SDL_RenderClear(met->renderer);
 
     SDL_Rect texr = drawDog(met);
-    SDL_RenderCopy(met->renderer, met->dog, NULL, NULL);
+    SDL_RenderCopy(met->renderer, met->dog, NULL, &texr);
 
 
     SDL_RenderPresent(met->renderer);
@@ -44,8 +44,8 @@ SDL_Rect drawDog(Met* met){
     SDL_QueryTexture(met->dog, NULL, NULL, &w, &h);
 
     SDL_Rect texr;
-    texr.x = 0; //SCREEN_WIDTH/2;
-    texr.y = 0; //SCREEN_HEIGHT/2;
+    texr.x = SCREEN_WIDTH/2;
+    texr.y = SCREEN_HEIGHT/2;
     texr.w = w;
     texr.h = h;
 
@@ -70,6 +70,7 @@ bool eventHandle(Met* met){
 }
 
 int leave(Met* met){
+    SDL_DestroyTexture(met->dog);
     SDL_DestroyRenderer(met->renderer);
     SDL_DestroyWindow(met->window);
     SDL_Quit();

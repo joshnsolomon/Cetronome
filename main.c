@@ -23,14 +23,7 @@ int main(int argc, char* args[]){
     bool quit = false;
     while (!quit){
         quit = eventHandle(met);
-        //SDL_RenderClear(met->renderer);
-
-        SDL_Rect texr = drawDog(met);
-        SDL_RenderCopy(met->renderer, met->dog, NULL, &texr);
-
-
-        SDL_RenderPresent(met->renderer);
-
+        draw(met);
     }
     
     return leave(met);
