@@ -25,6 +25,8 @@ int main(int argc, char* args[]){
         draw(met);
         quit = eventHandle(met);
     }
+
+    leave(met);
     
-    return leave(met);
+    exit(EXIT_SUCCESS);
 }
