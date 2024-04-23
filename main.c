@@ -22,8 +22,8 @@ int main(int argc, char* args[]){
     //main loop
     bool quit = false;
     while (!quit){
-        draw(met);
         quit = eventHandle(met);
+        draw(met);
     }
 
     leave(met);
