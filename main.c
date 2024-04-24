@@ -9,12 +9,8 @@ int main(int argc, char* args[]){
     printf("Hello, world!\n");
     
     //initialize stuff for met
-    SDL_Window* window;
-    SDL_Event e;
-    SDL_Renderer* renderer;
-    SDL_Texture* dog;
-    Met newMet = {.window = window, .e = e, .renderer = renderer, 
-                  .dog = dog};
+    INIT_DEFAULT_MET_VARS
+    Met newMet = DEFAULY_MET;
     Met* met = &newMet;
 
     setup(met);
