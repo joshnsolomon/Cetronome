@@ -1,11 +1,13 @@
 #include "met.h"
 #include "constants.h"
+#include "timer.h"
+
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
 
 
 int setup(Met* met){
-    if(SDL_Init(SDL_INIT_VIDEO) < 0){
+    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0){
         fprintf(stderr, "could not initialize sdl2: %s\n", SDL_GetError());
         return -1;
     }
@@ -28,6 +30,9 @@ int setup(Met* met){
     met->renderer = SDL_CreateRenderer(met->window,-1,SDL_RENDERER_ACCELERATED);
     met->dog = IMG_LoadTexture(met->renderer,DOG_IMAGE_PATH);
 
+    timer_start(&(met->timer), met->bpm);
+
+    return 0;
 }
 
 int draw(Met* met){
@@ -36,6 +41,7 @@ int draw(Met* met){
     drawDog(met);
 
     SDL_RenderPresent(met->renderer);
+    return 0;
 }
 
 int drawDog(Met* met){
@@ -55,19 +61,30 @@ int drawDog(Met* met){
 
 bool eventHandle(Met* met){
     SDL_WaitEvent(&(met->e));
-    bool output = false;
+    bool stop = false;
 
     if(met->e.type == SDL_QUIT){
-        output |= true;
+        stop |= true;
     }
     if(met->e.type == SDL_KEYDOWN){
-        output |= true;
+        if(met->e.key.keysym.sym == SDLK_SPACE){
+            if(met->timer == TIMER_OFF){
+                timer_start(&(met->timer), met->bpm);
+            } else {
+                timer_stop(&(met->timer));
+            }
+        } else {
+            stop |= true;
+        }
     }
     if(met->e.type == SDL_MOUSEBUTTONDOWN){
-        output |= true;
+        stop |= true;
+    }
+    if(met->e.type == SDL_USEREVENT){
+        printf("CLICK\n");
     }
 
-    return output; 
+    return stop; 
 }
 
 int leave(Met* met){
