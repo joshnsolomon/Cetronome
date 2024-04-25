@@ -6,6 +6,16 @@
 #include <stdio.h>
 
 
+Met met_default =
+    {.window = NULL,
+    .e = 0,
+    .renderer = NULL,
+    .dog = NULL,
+    .timer = TIMER_OFF,
+    .bpm = START_BPM
+    };
+
+
 int setup(Met* met){
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0){
         fprintf(stderr, "could not initialize sdl2: %s\n", SDL_GetError());

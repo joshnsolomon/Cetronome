@@ -4,13 +4,14 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+extern Met met_default; //defined in met.c
+
 
 int main(int argc, char* args[]){
     printf("Hello, world!\n");
     
     //initialize stuff for met
-    INIT_DEFAULT_MET_VARS
-    Met newMet = DEFAULY_MET;
+    Met newMet = met_default;
     Met* met = &newMet;
 
     setup(met);
@@ -23,6 +24,5 @@ int main(int argc, char* args[]){
     }
 
     leave(met);
-    
     exit(EXIT_SUCCESS);
 }

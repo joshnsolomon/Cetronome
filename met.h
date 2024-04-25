@@ -7,26 +7,8 @@
 #include "constants.h"
 #include "timer.h"
 
-//All this is basically because you can't have a default value for a struct in C
-#define INIT_DEFAULT_MET_VARS\
-    SDL_Window* window;\
-    SDL_Event e;\
-    SDL_Renderer* renderer;\
-    SDL_Texture* dog;\
-    SDL_TimerID timer;\
-    int bpm;
 
-#define DEFAULY_MET\
-    {.window = window,\
-    .e = e,\
-    .renderer = renderer,\
-    .dog = dog,\
-    .timer = TIMER_OFF,\
-    .bpm = START_BPM\
-    }
-
-
-struct Met_t{
+struct Met_t{ //remember to change default value in met.c
     SDL_Window* window;
     SDL_Event e;
     SDL_Renderer* renderer;
@@ -36,6 +18,8 @@ struct Met_t{
 };
 
 typedef struct Met_t Met;
+
+
 
 //Met init();
 int  setup(Met* met);
