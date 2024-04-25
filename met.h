@@ -2,6 +2,7 @@
 #define MET_H
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <stdbool.h>
 
 #include "constants.h"
@@ -15,7 +16,12 @@ struct Met_t{ //remember to change default value in met.c
     SDL_Texture* dog;
     SDL_TimerID timer;
     int bpm;
+    TTF_Font* font;
+    char count;
+    int max_count;
+    SDL_Texture* count_tex;
 };
+
 
 typedef struct Met_t Met;
 
@@ -28,5 +34,7 @@ bool eventHandle(Met* met);
 int leave(Met* met);
 
 int drawDog(Met* met);
+int click(Met* met);
+int drawCount(Met* met);
 
 #endif

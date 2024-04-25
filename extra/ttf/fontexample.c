@@ -16,6 +16,7 @@ int main(int argc, char *argv[]) {
     SDL_Window *window = NULL;
     TTF_Font* font = NULL;
     SDL_Color white = {0xFF, 0xFF, 0xFF};
+    //SDL_Color dark_green = {0x01, 0x32, 0x20};
 
 
     SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO);
@@ -29,6 +30,7 @@ int main(int argc, char *argv[]) {
         SDL_WINDOW_SHOWN
     );
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_SetRenderDrawColor(renderer, 0x01, 0x32, 0x20,255);
 
 
     dog = IMG_LoadTexture(renderer, "../../images/dogs.png");
