@@ -15,9 +15,13 @@ Met met_default =
     .timer = TIMER_OFF,
     .bpm = START_BPM,
     .font = NULL,
-    .count = '1', 
+
+    .count = 1, 
     .max_count = MAX_COUNT,
-    .count_tex = NULL
+    .count_1 = NULL,
+    .count_2 = NULL,
+    .count_3 = NULL,
+    .count_4 = NULL
     };
 
 
@@ -54,11 +58,27 @@ int setup(Met* met){
     //fonts
     met->font = TTF_OpenFont("fonts/Comic Sans MS.ttf", FONT_SIZE);
 
+    //counts
+    met->count_1 = textureFromText(met->renderer, met->font, g_white, "1");
+    met->count_2 = textureFromText(met->renderer, met->font, g_white, "2");
+    met->count_3 = textureFromText(met->renderer, met->font, g_white, "3");
+    met->count_4 = textureFromText(met->renderer, met->font, g_white, "4");
+
     //timer
     timer_start(&(met->timer), met->bpm);
 
     return 0;
 }
+
+SDL_Texture* textureFromText(SDL_Renderer* r, TTF_Font* font, SDL_Color color, char* text){
+    SDL_Surface* surface = TTF_RenderText_Solid(font, text, color);
+    SDL_Texture* t = SDL_CreateTextureFromSurface(r,surface);
+    //SDL_FreeSurface(surface);
+    return t;
+}
+
+
+
 
 //draw stuff
 int draw(Met* met){
@@ -86,16 +106,27 @@ int drawDog(Met* met){
 }
 
 int drawCount(Met* met){
-    SDL_Surface* surface = TTF_RenderGlyph_Solid(met->font, met->count, g_white);
-    met->count_tex = SDL_CreateTextureFromSurface(met->renderer, surface);
+    SDL_Texture* t;
+    switch(met->count){
+        case 1:
+            t = met->count_1;
+            break;
+        case 2:
+            t = met->count_2;
+            break;
+        case 3:
+            t = met->count_3;
+            break;
+        case 4:
+            t = met->count_4;
+            break;
 
+    }
     int x, y, w, h;
     SDL_GetWindowSize(met->window, &x, &y);
-    SDL_QueryTexture(met->count_tex, NULL, NULL, &w, &h);
-
+    SDL_QueryTexture(t, NULL, NULL, &w, &h);
     SDL_Rect box = {.x=(x-w)/2, .y=(y-h)/2, .w=w, .h=h};
-
-    SDL_RenderCopy(met->renderer, met->count_tex, NULL, &box);    
+    SDL_RenderCopy(met->renderer, t, NULL, &box);    
     return 0;
 }
 
@@ -129,7 +160,7 @@ bool eventHandle(Met* met){
 }
 
 int click(Met* met){
-    met->count = ((met->count) - '0') % met->max_count  + 1 + '0'; //increment count
+    met->count = (met->count) % met->max_count  + 1; //increment count
     return 0;
 }
 
@@ -137,9 +168,14 @@ int click(Met* met){
 //clean up
 int leave(Met* met){
     SDL_DestroyTexture(met->dog);
-    SDL_DestroyTexture(met->count_tex);
+    SDL_DestroyTexture(met->count_1);
+    SDL_DestroyTexture(met->count_2);
+    SDL_DestroyTexture(met->count_3);
+    SDL_DestroyTexture(met->count_4);
+
     IMG_Quit();
     TTF_Quit();
+
     SDL_DestroyRenderer(met->renderer);
     SDL_DestroyWindow(met->window);
     SDL_Quit();
