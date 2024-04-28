@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
     letter = SDL_CreateTextureFromSurface(renderer, text_surface);
 
 
-    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096); //Default audio chunksize
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024); //Default audio chunksize
     music = Mix_LoadMUS(MUSIC);
     Mix_PlayMusic(music,1);
 
@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
         SDL_RenderPresent(renderer);
 
 
-        SDL_PollEvent(&event); 
+        SDL_WaitEvent(&event); 
         if (event.type == SDL_QUIT)
             break;
         if (event.type == SDL_KEYDOWN){
