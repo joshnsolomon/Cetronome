@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 #include <stdbool.h>
 
 #include "constants.h"
@@ -18,12 +19,17 @@ struct Met_t{ //remember to change default value in met.c
     int bpm;
     TTF_Font* font;
 
+    //stuff for the count
     int count;
     int max_count;
     SDL_Texture* count_1;
     SDL_Texture* count_2;
     SDL_Texture* count_3;
     SDL_Texture* count_4;
+
+    //sounds
+    Mix_Chunk* rim;
+
 };
 
 

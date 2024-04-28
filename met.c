@@ -21,13 +21,15 @@ Met met_default =
     .count_1 = NULL,
     .count_2 = NULL,
     .count_3 = NULL,
-    .count_4 = NULL
+    .count_4 = NULL,
+
+    .rim = NULL
     };
 
 
 int setup(Met* met){
     //init stuff
-    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0){
+    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO) < 0){
         fprintf(stderr, "could not initialize sdl2: %s\n", SDL_GetError());
         return -1;
     }
@@ -56,13 +58,18 @@ int setup(Met* met){
     met->dog = IMG_LoadTexture(met->renderer,DOG_IMAGE_PATH);
 
     //fonts
-    met->font = TTF_OpenFont("fonts/Comic Sans MS.ttf", FONT_SIZE);
+    met->font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
 
     //counts
     met->count_1 = textureFromText(met->renderer, met->font, g_white, "1");
     met->count_2 = textureFromText(met->renderer, met->font, g_white, "2");
     met->count_3 = textureFromText(met->renderer, met->font, g_white, "3");
     met->count_4 = textureFromText(met->renderer, met->font, g_white, "4");
+
+    //audio stuff
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024); //Default audio chunksize
+    met->rim = Mix_LoadWAV(RIM_PATH);
+    
 
     //timer
     timer_start(&(met->timer), met->bpm);
@@ -163,6 +170,7 @@ bool eventHandle(Met* met){
 
 int click(Met* met){
     met->count = (met->count) % met->max_count  + 1; //increment count
+    Mix_PlayChannel(1, met->rim, 0); //play click sound
     return 0;
 }
 
@@ -177,6 +185,7 @@ int leave(Met* met){
 
     IMG_Quit();
     TTF_Quit();
+    Mix_Quit();
 
     SDL_DestroyRenderer(met->renderer);
     SDL_DestroyWindow(met->window);

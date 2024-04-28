@@ -9,6 +9,11 @@
 
 #define DOG_IMAGE_PATH "./images/dogs.png"
 
+//FONT STUFF
 #define FONT_SIZE 250
+#define FONT_PATH "./fonts/Comic Sans MS.ttf"
+
+//AUDIO STUFF
+#define RIM_PATH "./sounds/RIM.wav"
 
 #endif
