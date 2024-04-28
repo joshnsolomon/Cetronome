@@ -120,6 +120,8 @@ int drawCount(Met* met){
         case 4:
             t = met->count_4;
             break;
+        default:
+            printf("INVALID CASE IN DRAWCOUNT\n");
 
     }
     int x, y, w, h;
