@@ -29,6 +29,9 @@ struct Met_t{ //remember to change default value in met.c
 
     //sounds
     Mix_Chunk* rim;
+    Mix_Chunk* kick;
+    Mix_Chunk* snare;
+    Mix_Chunk* hat;
 
 };
 

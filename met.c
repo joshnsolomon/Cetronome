@@ -16,14 +16,17 @@ Met met_default =
     .bpm = START_BPM,
     .font = NULL,
 
-    .count = 1, 
+    .count = 0, 
     .max_count = MAX_COUNT,
     .count_1 = NULL,
     .count_2 = NULL,
     .count_3 = NULL,
     .count_4 = NULL,
 
-    .rim = NULL
+    .rim = NULL,
+    .kick = NULL,
+    .snare = NULL,
+    .hat = NULL
     };
 
 
@@ -69,6 +72,9 @@ int setup(Met* met){
     //audio stuff
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024); //Default audio chunksize
     met->rim = Mix_LoadWAV(RIM_PATH);
+    met->kick = Mix_LoadWAV(KICK_PATH);
+    met->snare = Mix_LoadWAV(SNARE_PATH);
+    met->hat = Mix_LoadWAV(HAT_PATH);
     
 
     //timer
@@ -115,6 +121,8 @@ int drawDog(Met* met){
 int drawCount(Met* met){
     SDL_Texture* t;
     switch(met->count){
+        case 0: //don't draw anything
+            return 0;
         case 1:
             t = met->count_1;
             break;
@@ -150,9 +158,11 @@ bool eventHandle(Met* met){
     if(met->e.type == SDL_KEYDOWN){
         if(met->e.key.keysym.sym == SDLK_SPACE){
             if(met->timer == TIMER_OFF){
+                click(met);
                 timer_start(&(met->timer), met->bpm);
             } else {
                 timer_stop(&(met->timer));
+                met->count = 0;
             }
         } else {
             stop |= true;
@@ -170,7 +180,22 @@ bool eventHandle(Met* met){
 
 int click(Met* met){
     met->count = (met->count) % met->max_count  + 1; //increment count
-    Mix_PlayChannel(1, met->rim, 0); //play click sound
+    switch(met->count){
+        case 1:
+            Mix_PlayChannel(1, met->kick, 0); //play click sound
+            break;
+        case 2:
+            Mix_PlayChannel(2, met->hat, 0); //play click sound
+            break;
+        case 3:
+            Mix_PlayChannel(3, met->snare, 0); //play click sound
+            break;
+        case 4:
+            Mix_PlayChannel(4, met->hat, 0); //play click sound
+            break;
+        default:
+            printf("INVALID COUNT NUMBER\n");
+    }
     return 0;
 }
 

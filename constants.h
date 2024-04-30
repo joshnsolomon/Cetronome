@@ -15,5 +15,8 @@
 
 //AUDIO STUFF
 #define RIM_PATH "./sounds/RIM.wav"
+#define KICK_PATH "./sounds/KICK.wav"
+#define SNARE_PATH "./sounds/SNARE.wav"
+#define HAT_PATH "./sounds/HAT.wav"
 
 #endif
