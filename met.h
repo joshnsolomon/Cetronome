@@ -8,6 +8,7 @@
 
 #include "constants.h"
 #include "timer.h"
+#include "widgets.h"
 
 
 struct Met_t{ //remember to change default value in met.c
@@ -18,6 +19,9 @@ struct Met_t{ //remember to change default value in met.c
     SDL_TimerID timer;
     int bpm;
     TTF_Font* font;
+
+    //Buttons
+    Button* datsun;
 
     //stuff for the count
     int count;
@@ -38,7 +42,7 @@ struct Met_t{ //remember to change default value in met.c
 
 typedef struct Met_t Met;
 
-
+extern Met met_default;
 
 //Met init();
 int  setup(Met* met);
@@ -50,5 +54,5 @@ SDL_Texture* textureFromText(SDL_Renderer* r, TTF_Font* font, SDL_Color color, c
 int drawDog(Met* met);
 int click(Met* met);
 int drawCount(Met* met);
-
+int drawDatsun(Met* met);
 #endif

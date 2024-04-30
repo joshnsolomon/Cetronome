@@ -7,7 +7,9 @@
 #define START_BPM 120
 #define MAX_COUNT 4
 
-#define DOG_IMAGE_PATH "./images/dogs.png"
+//images
+#define DOG_IMAGE_PATH "./images/extra/dogs.png"
+#define DATSUN_IMAGE_PATH "./images/extra/datsun.png"
 
 //FONT STUFF
 #define FONT_SIZE 250

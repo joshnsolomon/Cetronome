@@ -4,8 +4,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-extern Met met_default; //defined in met.c
-
 
 int main(int argc, char* args[]){
     printf("Hello, world!\n");
