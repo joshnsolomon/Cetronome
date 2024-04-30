@@ -1,3 +1,6 @@
+#ifndef WIDGETS_H
+#define WIDGETS_H
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdbool.h>
@@ -10,6 +13,9 @@ struct Button_t{
 
 typedef struct Button_t Button;
 
-extern Button button_default;
+#define DEFAULT_BUTTON {.texture = NULL, .posx = 0, .posy = 0}
 
-bool isInside(Button* button, int x, int y);
+//functions
+bool isInside(Button button, int x, int y);
+
+#endif

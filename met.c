@@ -7,6 +7,7 @@
 
 SDL_Color g_white = {0xFF, 0xFF, 0xFF};
 
+
 Met met_default =
     {.window = NULL,
     .e = 0,
@@ -16,7 +17,7 @@ Met met_default =
     .bpm = START_BPM,
     .font = NULL,
 
-    .datsun = &button_default,
+    .datsun = DEFAULT_BUTTON,
 
     .count = 0, 
     .max_count = MAX_COUNT,
@@ -61,7 +62,7 @@ int setup(Met* met){
 
     //renders that don't change, the ones that do are in draw functions
     met->dog = IMG_LoadTexture(met->renderer, DOG_IMAGE_PATH);
-    met->datsun->texture = IMG_LoadTexture(met->renderer, DATSUN_IMAGE_PATH);
+    met->datsun.texture = IMG_LoadTexture(met->renderer, DATSUN_IMAGE_PATH);
 
     //fonts
     met->font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
@@ -126,14 +127,14 @@ int drawDog(Met* met){
 int drawDatsun(Met* met){
     int x, y, w, h;
     SDL_GetWindowSize(met->window, &x, &y);
-    SDL_QueryTexture(met->datsun->texture, NULL, NULL, &w, &h);
+    SDL_QueryTexture(met->datsun.texture, NULL, NULL, &w, &h);
     SDL_Rect box = {.x=x-w, .y=y-h -10, .w=w, .h=h};
 
     //you have to save where you're drawing it to the struct
-    met->datsun->posx = box.x;
-    met->datsun->posy = box.y;
+    met->datsun.posx = box.x;
+    met->datsun.posy = box.y;
 
-    SDL_RenderCopy(met->renderer, met->datsun->texture, NULL, &box);    
+    SDL_RenderCopy(met->renderer, met->datsun.texture, NULL, &box);    
     return 0;
 
 }

@@ -2,16 +2,16 @@
 
 Button button_default = {.texture = NULL, .posx = 0, .posy = 0};
 
-bool isInside(Button* button, int x, int y){
+bool isInside(Button button, int x, int y){
     //formula from math stack exchange https://math.stackexchange.com/questions/76457/check-if-a-point-is-within-an-ellipse
     int w, h;
-    SDL_QueryTexture(button->texture, NULL, NULL, &w, &h);
+    SDL_QueryTexture(button.texture, NULL, NULL, &w, &h);
 
     double height, width, offset_x, offset_y, mouse_x, mouse_y;
     height = h;
     width = w;
-    offset_x = button->posx;
-    offset_y = button->posy;
+    offset_x = button.posx;
+    offset_y = button.posy;
     mouse_x = x;
     mouse_y = y;
 

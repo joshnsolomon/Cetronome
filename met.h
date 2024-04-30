@@ -21,7 +21,7 @@ struct Met_t{ //remember to change default value in met.c
     TTF_Font* font;
 
     //Buttons
-    Button* datsun;
+    Button datsun;
 
     //stuff for the count
     int count;
@@ -44,7 +44,7 @@ typedef struct Met_t Met;
 
 extern Met met_default;
 
-//Met init();
+//functions
 int  setup(Met* met);
 int  draw(Met* met);
 bool eventHandle(Met* met);
