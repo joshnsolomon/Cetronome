@@ -12,12 +12,12 @@ Met met_default =
     {.window = NULL,
     .e = 0,
     .renderer = NULL,
-    .dog = NULL,
     .timer = TIMER_OFF,
     .bpm = START_BPM,
     .font = NULL,
 
     .datsun = DEFAULT_BUTTON,
+    .drake = DEFAULT_BUTTON,
 
     .count = 0, 
     .max_count = MAX_COUNT,
@@ -61,7 +61,7 @@ int setup(Met* met){
     SDL_SetRenderDrawColor(met->renderer, 0x01, 0x32, 0x20,255); //make background dark green
 
     //renders that don't change, the ones that do are in draw functions
-    met->dog = IMG_LoadTexture(met->renderer, DOG_IMAGE_PATH);
+    met->drake.texture = IMG_LoadTexture(met->renderer, DOG_IMAGE_PATH);
     met->datsun.texture = IMG_LoadTexture(met->renderer, DATSUN_IMAGE_PATH);
 
     //fonts
@@ -75,12 +75,13 @@ int setup(Met* met){
 
     //audio stuff
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024); //Default audio chunksize
-    met->datsun_sound = Mix_LoadWAV(DATSUN_SOUND_PATH);
     met->rim = Mix_LoadWAV(RIM_PATH);
     met->kick = Mix_LoadWAV(KICK_PATH);
     met->snare = Mix_LoadWAV(SNARE_PATH);
     met->hat = Mix_LoadWAV(HAT_PATH);
     
+    met->datsun_sound = Mix_LoadWAV(DATSUN_SOUND_PATH);
+    met->drake_sound = Mix_LoadWAV(DRAKE_SOUND_PATH);
 
     //timer
     timer_start(&(met->timer), met->bpm);
@@ -113,14 +114,14 @@ int draw(Met* met){
 
 int drawDog(Met* met){
     int w, h;
-    SDL_QueryTexture(met->dog, NULL, NULL, &w, &h);
+    SDL_QueryTexture(met->drake.texture, NULL, NULL, &w, &h);
     SDL_Rect texr;
     texr.x = 0;
     texr.y = 0;
     texr.w = w;
     texr.h = h;
 
-    SDL_RenderCopy(met->renderer, met->dog, NULL, &texr);
+    SDL_RenderCopy(met->renderer, met->drake.texture, NULL, &texr);
 
     return 0;
 }
@@ -195,6 +196,8 @@ bool eventHandle(Met* met){
         SDL_GetMouseState(&x,&y);
         if( isInside(met->datsun, x, y) )
             Mix_PlayChannel(7, met->datsun_sound, 0);
+        else if (isInsideSquare(met->drake, x, y))
+            Mix_PlayChannel(6, met->drake_sound,0);
         else
             stop |= true;
     }
@@ -229,7 +232,6 @@ int click(Met* met){
 
 //clean up
 int leave(Met* met){
-    SDL_DestroyTexture(met->dog);
     SDL_DestroyTexture(met->count_1);
     SDL_DestroyTexture(met->count_2);
     SDL_DestroyTexture(met->count_3);

@@ -28,9 +28,20 @@ bool isInside(Button button, int x, int y){
         return true;
     else
         return false;
-
-
-
 }
+
+
+
+bool isInsideSquare(Button button, int x, int y){
+    int w, h;
+    SDL_QueryTexture(button.texture, NULL, NULL, &w, &h);
+
+    int xp = button.posx;
+    int yp = button.posy;
+
+    return !(x < xp || x > xp + w || y < yp || y >yp + h);
+}
+
+
 
 

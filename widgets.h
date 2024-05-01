@@ -17,5 +17,6 @@ typedef struct Button_t Button;
 
 //functions
 bool isInside(Button button, int x, int y);
+bool isInsideSquare(Button button, int x, int y);
 
 #endif

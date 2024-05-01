@@ -21,5 +21,6 @@
 #define SNARE_PATH "./sounds/SNARE.wav"
 #define HAT_PATH "./sounds/HAT.wav"
 #define DATSUN_SOUND_PATH "./sounds/extra/datsun.wav"
+#define DRAKE_SOUND_PATH "./sounds/extra/drake.wav"
 
 #endif
