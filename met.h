@@ -32,6 +32,7 @@ struct Met_t{ //remember to change default value in met.c
     SDL_Texture* count_4;
 
     //sounds
+    Mix_Chunk* datsun_sound;
     Mix_Chunk* rim;
     Mix_Chunk* kick;
     Mix_Chunk* snare;

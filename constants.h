@@ -20,5 +20,6 @@
 #define KICK_PATH "./sounds/KICK.wav"
 #define SNARE_PATH "./sounds/SNARE.wav"
 #define HAT_PATH "./sounds/HAT.wav"
+#define DATSUN_SOUND_PATH "./sounds/extra/datsun.wav"
 
 #endif

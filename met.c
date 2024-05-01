@@ -26,7 +26,7 @@ Met met_default =
     .count_3 = NULL,
     .count_4 = NULL,
 
-    .rim = NULL,
+    .datsun_sound = NULL,
     .kick = NULL,
     .snare = NULL,
     .hat = NULL
@@ -75,6 +75,7 @@ int setup(Met* met){
 
     //audio stuff
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024); //Default audio chunksize
+    met->datsun_sound = Mix_LoadWAV(DATSUN_SOUND_PATH);
     met->rim = Mix_LoadWAV(RIM_PATH);
     met->kick = Mix_LoadWAV(KICK_PATH);
     met->snare = Mix_LoadWAV(SNARE_PATH);
@@ -193,7 +194,7 @@ bool eventHandle(Met* met){
         int x, y;
         SDL_GetMouseState(&x,&y);
         if( isInside(met->datsun, x, y) )
-            printf("\nDATSUN!\n");
+            Mix_PlayChannel(7, met->datsun_sound, 0);
         else
             stop |= true;
     }
