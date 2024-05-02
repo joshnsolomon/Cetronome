@@ -26,6 +26,9 @@ struct Met_t{ //remember to change default value in met.c
     Button up;
     Button down;
 
+    //Switches
+    Switch play;
+
     //stuff for the count
     int count;
     int max_count;
@@ -65,5 +68,6 @@ int drawBPM(Met* met);
 
 int min(int i, int min);
 int max(int i, int max);
+int start_stop(Met* met);
 
 #endif

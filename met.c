@@ -22,6 +22,8 @@ Met met_default =
     .up = DEFAULT_BUTTON,
     .down = DEFAULT_BUTTON,
 
+    .play = DEFAULT_SWITCH,
+
     .count = 0, 
     .max_count = MAX_COUNT,
     .count_1 = NULL,
@@ -70,6 +72,9 @@ int setup(Met* met){
     met->up.texture = IMG_LoadTexture(met->renderer, UP_IMAGE_PATH);
     met->down.texture = IMG_LoadTexture(met->renderer, DOWN_IMAGE_PATH);
 
+    //switches
+    switch_setPaths(met->renderer, &(met->play), PLAY_IMAGE_PATH, PAUSE_IMAGE_PATH);
+
     //fonts
     met->big_font = TTF_OpenFont(FONT_PATH, BIG_FONT_SIZE);
     met->small_font = TTF_OpenFont(FONT_PATH, SMALL_FONT_SIZE);
@@ -90,8 +95,8 @@ int setup(Met* met){
     met->datsun_sound = Mix_LoadWAV(DATSUN_SOUND_PATH);
     met->drake_sound = Mix_LoadWAV(DRAKE_SOUND_PATH);
 
-    //timer
-    timer_start(&(met->timer), met->bpm);
+    //timer don't start on open
+    //timer_start(&(met->timer), met->bpm);
 
     return 0;
 }
@@ -153,8 +158,8 @@ int drawDatsun(Met* met){
 int drawCount(Met* met){
     SDL_Texture* t;
     switch(met->count){
-        case 0: //don't draw anything
-            return 0;
+        case 0: //met paused
+            t = met->count_1;
         case 1:
             t = met->count_1;
             break;
@@ -171,18 +176,36 @@ int drawCount(Met* met){
             printf("INVALID CASE IN DRAWCOUNT\n");
 
     }
-    int x, y, w, h;
+    int x, y, w1, h1;
     SDL_GetWindowSize(met->window, &x, &y);
-    SDL_QueryTexture(t, NULL, NULL, &w, &h);
-    SDL_Rect box = {.x=(x-w)/2, .y=(y-h)/2, .w=w, .h=h};
-    SDL_RenderCopy(met->renderer, t, NULL, &box);    
+    SDL_QueryTexture(t, NULL, NULL, &w1, &h1);
+    int x1 = (x-w1)/2;
+    int y1 = (y-h1)/2;
+    SDL_Rect box1 = {.x=x1, .y=y1, .w=w1, .h=h1};
+    SDL_RenderCopy(met->renderer, t, NULL, &box1);    
+
+    //draw play switch
+    int w2, h2;
+    SDL_QueryTexture(met->play.current_tex, NULL, NULL, &w2, &h2);
+    int x2 = (x-w2)/2;
+    int y2 = y1 + h1 - 60;
+    met->play.posx = x2;
+    met->play.posy = y2;
+    SDL_Rect box2 = {.x=x2, .y=y2, .w=w2, .h=h2};
+    SDL_RenderCopy(met->renderer, met->play.current_tex, NULL, &box2);
+
+
     return 0;
 }
 
 int drawBPM(Met* met){
     char tempo[10];
     sprintf(tempo,"%d BPM", met->bpm);
-    SDL_Texture* texture = textureFromText(met->renderer, met->small_font, g_white, tempo);
+
+    static SDL_Texture* texture = NULL; //I think these two lines prevent a memory leak..
+    SDL_DestroyTexture(texture);
+
+    texture = textureFromText(met->renderer, met->small_font, g_white, tempo);
 
     int x, y, w, h;
     SDL_GetWindowSize(met->window, &x, &y);
@@ -227,15 +250,9 @@ bool eventHandle(Met* met){
         stop |= true;
     }
     if(met->e.type == SDL_KEYDOWN){
-        if(met->e.key.keysym.sym == SDLK_SPACE){ //play/pause
-            if(met->timer == TIMER_OFF){
-                click(met);
-                timer_start(&(met->timer), met->bpm);
-            } else {
-                timer_stop(&(met->timer));
-                met->count = 0;
-            }
-        } 
+        if(met->e.key.keysym.sym == SDLK_SPACE) //play/pause
+            start_stop(met);
+
         else if (met->e.key.keysym.sym == SDLK_UP) //tempo up
             met->bpm = min(met->bpm + BPM_STEP, MAX_BPM);
 
@@ -250,18 +267,22 @@ bool eventHandle(Met* met){
         int x, y;
         SDL_GetMouseState(&x,&y);
 
-        if( isInside(met->datsun, x, y) ) //datsun button
+        if( button_isInside(met->datsun, x, y) ) //datsun button
             Mix_PlayChannel(7, met->datsun_sound, 0);
 
-        else if (isInsideSquare(met->drake, x, y)) //drake button
+        else if (button_isInsideSquare(met->drake, x, y)) //drake button
             Mix_PlayChannel(6, met->drake_sound,0);
 
-        else if (isInsideSquare(met->up, x, y)){ //tempo up
+        else if (button_isInside(met->up, x, y)){ //tempo up
             met->bpm = min(met->bpm + BPM_STEP, MAX_BPM);
         }
 
-        else if (isInsideSquare(met->down, x, y)){ // tempo down
+        else if (button_isInside(met->down, x, y)){ // tempo down
             met->bpm = max(met->bpm - BPM_STEP, BPM_STEP);
+        }
+
+        else if (switch_isInside(met->play, x, y)){
+            start_stop(met);
         }
 
         else
@@ -309,6 +330,21 @@ int max(int i, int min){
         return min;
     else
         return i;
+}
+
+int start_stop(Met* met){
+    if(met->timer == TIMER_OFF){
+        click(met);
+        timer_start(&(met->timer), met->bpm);
+        switch_toggle(&(met->play));
+    } else {
+        timer_stop(&(met->timer));
+        met->count = 0;
+        switch_toggle(&(met->play));
+    }
+
+    return 0;
+
 }
 
 //clean up

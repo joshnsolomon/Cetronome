@@ -14,6 +14,8 @@
 #define DATSUN_IMAGE_PATH "./images/extra/datsun.png"
 #define UP_IMAGE_PATH "./images/up.png"
 #define DOWN_IMAGE_PATH "./images/down.png"
+#define PLAY_IMAGE_PATH "./images/play.png"
+#define PAUSE_IMAGE_PATH "./images/pause.png"
 
 //FONT STUFF
 #define BIG_FONT_SIZE 250
