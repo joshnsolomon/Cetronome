@@ -5,14 +5,19 @@
 #define SCREEN_HEIGHT 720
 
 #define START_BPM 120
+#define BPM_STEP 10
+#define MAX_BPM 300
 #define MAX_COUNT 4
 
 //images
 #define DOG_IMAGE_PATH "./images/extra/dogs.png"
 #define DATSUN_IMAGE_PATH "./images/extra/datsun.png"
+#define UP_IMAGE_PATH "./images/up.png"
+#define DOWN_IMAGE_PATH "./images/down.png"
 
 //FONT STUFF
-#define FONT_SIZE 250
+#define BIG_FONT_SIZE 250
+#define SMALL_FONT_SIZE 100
 #define FONT_PATH "./fonts/Comic Sans MS.ttf"
 
 //AUDIO STUFF

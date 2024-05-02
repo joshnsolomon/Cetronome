@@ -17,11 +17,14 @@ struct Met_t{ //remember to change default value in met.c
     SDL_Renderer* renderer;
     SDL_TimerID timer;
     int bpm;
-    TTF_Font* font;
+    TTF_Font* big_font;
+    TTF_Font* small_font;
 
     //Buttons
     Button datsun;
     Button drake;
+    Button up;
+    Button down;
 
     //stuff for the count
     int count;
@@ -30,7 +33,7 @@ struct Met_t{ //remember to change default value in met.c
     SDL_Texture* count_2;
     SDL_Texture* count_3;
     SDL_Texture* count_4;
-
+    
     //sounds
     Mix_Chunk* rim;
     Mix_Chunk* kick;
@@ -39,6 +42,7 @@ struct Met_t{ //remember to change default value in met.c
 
     Mix_Chunk* drake_sound;
     Mix_Chunk* datsun_sound;
+    
 };
 
 
@@ -57,4 +61,9 @@ int drawDog(Met* met);
 int click(Met* met);
 int drawCount(Met* met);
 int drawDatsun(Met* met);
+int drawBPM(Met* met);
+
+int min(int i, int min);
+int max(int i, int max);
+
 #endif

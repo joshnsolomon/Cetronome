@@ -18,7 +18,7 @@ Uint32 callback(Uint32 interval, void* p){
     e.user = ue;
 
     SDL_PushEvent(&e);
-    return interval;
+    return 0;
 }
 
 
@@ -34,6 +34,7 @@ int timer_stop(SDL_TimerID* timer){
     }
     return !success;
 }
+
 
 
 

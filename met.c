@@ -14,10 +14,13 @@ Met met_default =
     .renderer = NULL,
     .timer = TIMER_OFF,
     .bpm = START_BPM,
-    .font = NULL,
+    .big_font = NULL,
+    .small_font = NULL,
 
     .datsun = DEFAULT_BUTTON,
     .drake = DEFAULT_BUTTON,
+    .up = DEFAULT_BUTTON,
+    .down = DEFAULT_BUTTON,
 
     .count = 0, 
     .max_count = MAX_COUNT,
@@ -25,6 +28,7 @@ Met met_default =
     .count_2 = NULL,
     .count_3 = NULL,
     .count_4 = NULL,
+
 
     .datsun_sound = NULL,
     .kick = NULL,
@@ -60,18 +64,21 @@ int setup(Met* met){
     met->renderer = SDL_CreateRenderer(met->window,-1,SDL_RENDERER_ACCELERATED);
     SDL_SetRenderDrawColor(met->renderer, 0x01, 0x32, 0x20,255); //make background dark green
 
-    //renders that don't change, the ones that do are in draw functions
+    //buttons
     met->drake.texture = IMG_LoadTexture(met->renderer, DOG_IMAGE_PATH);
     met->datsun.texture = IMG_LoadTexture(met->renderer, DATSUN_IMAGE_PATH);
+    met->up.texture = IMG_LoadTexture(met->renderer, UP_IMAGE_PATH);
+    met->down.texture = IMG_LoadTexture(met->renderer, DOWN_IMAGE_PATH);
 
     //fonts
-    met->font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
+    met->big_font = TTF_OpenFont(FONT_PATH, BIG_FONT_SIZE);
+    met->small_font = TTF_OpenFont(FONT_PATH, SMALL_FONT_SIZE);
 
     //counts
-    met->count_1 = textureFromText(met->renderer, met->font, g_white, "1");
-    met->count_2 = textureFromText(met->renderer, met->font, g_white, "2");
-    met->count_3 = textureFromText(met->renderer, met->font, g_white, "3");
-    met->count_4 = textureFromText(met->renderer, met->font, g_white, "4");
+    met->count_1 = textureFromText(met->renderer, met->big_font, g_white, "1");
+    met->count_2 = textureFromText(met->renderer, met->big_font, g_white, "2");
+    met->count_3 = textureFromText(met->renderer, met->big_font, g_white, "3");
+    met->count_4 = textureFromText(met->renderer, met->big_font, g_white, "4");
 
     //audio stuff
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024); //Default audio chunksize
@@ -92,7 +99,7 @@ int setup(Met* met){
 SDL_Texture* textureFromText(SDL_Renderer* r, TTF_Font* font, SDL_Color color, char* text){
     SDL_Surface* surface = TTF_RenderText_Solid(font, text, color);
     SDL_Texture* t = SDL_CreateTextureFromSurface(r,surface);
-    //SDL_FreeSurface(surface);
+    SDL_FreeSurface(surface);
     return t;
 }
 
@@ -107,6 +114,8 @@ int draw(Met* met){
     drawCount(met);
 
     drawDatsun(met);
+    
+    drawBPM(met);
 
     SDL_RenderPresent(met->renderer);
     return 0;
@@ -170,6 +179,45 @@ int drawCount(Met* met){
     return 0;
 }
 
+int drawBPM(Met* met){
+    char tempo[10];
+    sprintf(tempo,"%d BPM", met->bpm);
+    SDL_Texture* texture = textureFromText(met->renderer, met->small_font, g_white, tempo);
+
+    int x, y, w, h;
+    SDL_GetWindowSize(met->window, &x, &y);
+
+    //label
+    SDL_QueryTexture(texture, NULL, NULL, &w, &h);
+    int x1 = 415-w;
+    int y1 = y - h - 10;
+    SDL_Rect box1 = {.x=x1, .y=y1, .w=w, .h=h};
+    SDL_RenderCopy(met->renderer, texture, NULL, &box1);    
+    
+    //down button
+    SDL_QueryTexture(met->down.texture, NULL, NULL, &w, &h);
+    int y2 = y1 - h - 10;
+    int x2 = 10;
+    met->down.posy = y2;
+    met->down.posx = x2; 
+    SDL_Rect box2 = {.x=x2, .y=y2, .w=w, .h=h};
+    SDL_RenderCopy(met->renderer, met->down.texture, NULL, &box2);    
+    
+    //up button
+    SDL_QueryTexture(met->up.texture, NULL, NULL, &w, &h);
+    int y3 = y2 - h - 10;
+    int x3 = 10;
+    met->up.posy = y3;
+    met->up.posx = x3; 
+    SDL_Rect box3 = {.x=x3, .y=y3, .w=w, .h=h};
+    SDL_RenderCopy(met->renderer, met->up.texture, NULL, &box3);    
+
+
+
+    return 0;
+}
+
+
 //event stuff
 bool eventHandle(Met* met){
     SDL_WaitEvent(&(met->e));
@@ -179,7 +227,7 @@ bool eventHandle(Met* met){
         stop |= true;
     }
     if(met->e.type == SDL_KEYDOWN){
-        if(met->e.key.keysym.sym == SDLK_SPACE){
+        if(met->e.key.keysym.sym == SDLK_SPACE){ //play/pause
             if(met->timer == TIMER_OFF){
                 click(met);
                 timer_start(&(met->timer), met->bpm);
@@ -187,22 +235,42 @@ bool eventHandle(Met* met){
                 timer_stop(&(met->timer));
                 met->count = 0;
             }
-        } else {
+        } 
+        else if (met->e.key.keysym.sym == SDLK_UP) //tempo up
+            met->bpm = min(met->bpm + BPM_STEP, MAX_BPM);
+
+        else if (met->e.key.keysym.sym == SDLK_DOWN) //tempo down
+            met->bpm = max(met->bpm - BPM_STEP, BPM_STEP);
+        
+        else {
             stop |= true;
         }
     }
     if(met->e.type == SDL_MOUSEBUTTONDOWN){
         int x, y;
         SDL_GetMouseState(&x,&y);
-        if( isInside(met->datsun, x, y) )
+
+        if( isInside(met->datsun, x, y) ) //datsun button
             Mix_PlayChannel(7, met->datsun_sound, 0);
-        else if (isInsideSquare(met->drake, x, y))
+
+        else if (isInsideSquare(met->drake, x, y)) //drake button
             Mix_PlayChannel(6, met->drake_sound,0);
+
+        else if (isInsideSquare(met->up, x, y)){ //tempo up
+            met->bpm = min(met->bpm + BPM_STEP, MAX_BPM);
+        }
+
+        else if (isInsideSquare(met->down, x, y)){ // tempo down
+            met->bpm = max(met->bpm - BPM_STEP, BPM_STEP);
+        }
+
         else
             stop |= true;
     }
     if(met->e.type == SDL_USEREVENT){
         click(met);
+        if (met->timer != TIMER_OFF)
+            timer_start(&(met->timer), met->bpm);
     }
 
     return stop; 
@@ -229,6 +297,19 @@ int click(Met* met){
     return 0;
 }
 
+int min(int i, int max){
+    if (i >= max)
+        return max;
+    else 
+        return i;
+}
+
+int max(int i, int min){
+    if( i <= min)
+        return min;
+    else
+        return i;
+}
 
 //clean up
 int leave(Met* met){
