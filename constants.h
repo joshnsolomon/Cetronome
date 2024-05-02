@@ -16,6 +16,8 @@
 #define DOWN_IMAGE_PATH "./images/down.png"
 #define PLAY_IMAGE_PATH "./images/play.png"
 #define PAUSE_IMAGE_PATH "./images/pause.png"
+#define ON_IMAGE_PATH "./images/on.png"
+#define OFF_IMAGE_PATH "./images/off.png"
 
 //FONT STUFF
 #define BIG_FONT_SIZE 250
@@ -29,5 +31,19 @@
 #define HAT_PATH "./sounds/HAT.wav"
 #define DATSUN_SOUND_PATH "./sounds/extra/datsun.wav"
 #define DRAKE_SOUND_PATH "./sounds/extra/drake.wav"
+
+#define NOTE_A_PATH "./sounds/A.wav"
+#define NOTE_ASH_PATH "./sounds/A#.wav"
+#define NOTE_B_PATH "./sounds/B.wav"
+#define NOTE_C_PATH "./sounds/C.wav"
+#define NOTE_CSH_PATH "./sounds/C#.wav"
+#define NOTE_D_PATH "./sounds/D.wav"
+#define NOTE_DSH_PATH "./sounds/D#.wav"
+#define NOTE_E_PATH "./sounds/E.wav"
+#define NOTE_F_PATH "./sounds/F.wav"
+#define NOTE_FSH_PATH "./sounds/F#.wav"
+#define NOTE_G_PATH "./sounds/G.wav"
+#define NOTE_GSH_PATH "./sounds/G#.wav"
+
 
 #endif

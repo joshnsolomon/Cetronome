@@ -23,6 +23,7 @@ Met met_default =
     .down = DEFAULT_BUTTON,
 
     .play = DEFAULT_SWITCH,
+    .notes = DEFAULT_SWITCH,
 
     .count = 0, 
     .max_count = MAX_COUNT,
@@ -35,14 +36,22 @@ Met met_default =
     .datsun_sound = NULL,
     .kick = NULL,
     .snare = NULL,
-    .hat = NULL
+    .hat = NULL,
+
+    .note_A = NULL,
+    .note_B = NULL,
+    .note_C = NULL,
+    .note_D = NULL,
+    .note_E = NULL,
+    .note_F = NULL,
+    .note_G = NULL
     };
 
 
 int setup(Met* met){
     //init stuff
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO) < 0){
-        fprintf(stderr, "could not initialize sdl2: %s\n", SDL_GetError());
+        printf("could not initialize sdl2: %s\n", SDL_GetError());
         return -1;
     }
     IMG_Init(IMG_INIT_PNG);
@@ -58,7 +67,7 @@ int setup(Met* met){
             );
     
     if (met->window == NULL){
-        fprintf("could not create window: %s\n", SDL_GetError());
+        printf("could not create window: %s\n", SDL_GetError());
         return -1;
     }
 
@@ -74,6 +83,7 @@ int setup(Met* met){
 
     //switches
     switch_setPaths(met->renderer, &(met->play), PLAY_IMAGE_PATH, PAUSE_IMAGE_PATH);
+    switch_setPaths(met->renderer, &(met->notes), OFF_IMAGE_PATH, ON_IMAGE_PATH);
 
     //fonts
     met->big_font = TTF_OpenFont(FONT_PATH, BIG_FONT_SIZE);
@@ -95,6 +105,14 @@ int setup(Met* met){
     met->datsun_sound = Mix_LoadWAV(DATSUN_SOUND_PATH);
     met->drake_sound = Mix_LoadWAV(DRAKE_SOUND_PATH);
 
+    met->note_A = Mix_LoadWAV(NOTE_A_PATH);
+    met->note_B = Mix_LoadWAV(NOTE_B_PATH);
+    met->note_C = Mix_LoadWAV(NOTE_C_PATH);
+    met->note_D = Mix_LoadWAV(NOTE_D_PATH);
+    met->note_E = Mix_LoadWAV(NOTE_E_PATH);
+    met->note_F = Mix_LoadWAV(NOTE_F_PATH);
+    met->note_G = Mix_LoadWAV(NOTE_G_PATH);
+
     //timer don't start on open
     //timer_start(&(met->timer), met->bpm);
 
@@ -115,12 +133,13 @@ SDL_Texture* textureFromText(SDL_Renderer* r, TTF_Font* font, SDL_Color color, c
 int draw(Met* met){
     SDL_RenderClear(met->renderer);
 
-    drawDog(met);
     drawCount(met);
 
+    drawDog(met);
     drawDatsun(met);
     
     drawBPM(met);
+    drawNotes(met);
 
     SDL_RenderPresent(met->renderer);
     return 0;
@@ -240,6 +259,21 @@ int drawBPM(Met* met){
     return 0;
 }
 
+int drawNotes(Met* met){
+
+    int x, y, w1, h1;
+    SDL_GetWindowSize(met->window, &x, &y);
+    SDL_QueryTexture(met->notes.current_tex, NULL, NULL, &w1, &h1);
+    int x1 = x - w1 - 120;
+    int y1 = y - h1 + 20;
+    met->notes.posx = x1;
+    met->notes.posy = y1;
+    SDL_Rect box1 = {.x=x1, .y=y1, .w=w1, .h=h1};
+    SDL_RenderCopy(met->renderer, met->notes.current_tex, NULL, &box1);    
+
+    return 0;
+}
+
 
 //event stuff
 bool eventHandle(Met* met){
@@ -250,7 +284,7 @@ bool eventHandle(Met* met){
         stop |= true;
     }
     if(met->e.type == SDL_KEYDOWN){
-        if(met->e.key.keysym.sym == SDLK_SPACE) //play/pause
+        if(met->e.key.keysym.sym == SDLK_SPACE) //play pause
             start_stop(met);
 
         else if (met->e.key.keysym.sym == SDLK_UP) //tempo up
@@ -281,8 +315,12 @@ bool eventHandle(Met* met){
             met->bpm = max(met->bpm - BPM_STEP, BPM_STEP);
         }
 
-        else if (switch_isInside(met->play, x, y)){
+        else if (switch_isInside(met->play, x, y)){ //play pause
             start_stop(met);
+        }
+
+        else if (switch_isInside(met->notes, x, y)){
+            switch_toggle(&(met->notes));
         }
 
         else

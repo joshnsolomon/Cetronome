@@ -28,6 +28,7 @@ struct Met_t{ //remember to change default value in met.c
 
     //Switches
     Switch play;
+    Switch notes;
 
     //stuff for the count
     int count;
@@ -45,6 +46,14 @@ struct Met_t{ //remember to change default value in met.c
 
     Mix_Chunk* drake_sound;
     Mix_Chunk* datsun_sound;
+
+    Mix_Chunk* note_A;
+    Mix_Chunk* note_B;
+    Mix_Chunk* note_C;
+    Mix_Chunk* note_D;
+    Mix_Chunk* note_E;
+    Mix_Chunk* note_F;
+    Mix_Chunk* note_G;
     
 };
 
@@ -65,6 +74,7 @@ int click(Met* met);
 int drawCount(Met* met);
 int drawDatsun(Met* met);
 int drawBPM(Met* met);
+int drawNotes(Met* met);
 
 int min(int i, int min);
 int max(int i, int max);
