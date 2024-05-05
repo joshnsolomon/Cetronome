@@ -47,6 +47,10 @@ struct Met_t{ //remember to change default value in met.c
     Mix_Chunk* drake_sound;
     Mix_Chunk* datsun_sound;
 
+    //note stuff
+    int currentNote;
+    int nextNote;
+
     Mix_Chunk* note_A;
     Mix_Chunk* note_B;
     Mix_Chunk* note_C;

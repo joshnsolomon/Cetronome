@@ -356,6 +356,10 @@ int click(Met* met){
     return 0;
 }
 
+int play_Note(Met* met){
+    return 0;
+}
+
 int min(int i, int max){
     if (i >= max)
         return max;
