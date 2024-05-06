@@ -38,6 +38,10 @@ Met met_default =
     .snare = NULL,
     .hat = NULL,
 
+    .currentNote = 0,
+    .nextNote = 0,
+    .notesPlaying = false,
+
     .note_A = NULL,
     .note_B = NULL,
     .note_C = NULL,
@@ -293,6 +297,9 @@ bool eventHandle(Met* met){
         else if (met->e.key.keysym.sym == SDLK_DOWN) //tempo down
             met->bpm = max(met->bpm - BPM_STEP, BPM_STEP);
         
+        else if (met->e.key.keysym.sym == SDLK_n) //tempo down
+            toggle_Notes(met);
+
         else {
             stop |= true;
         }
@@ -320,7 +327,7 @@ bool eventHandle(Met* met){
         }
 
         else if (switch_isInside(met->notes, x, y)){
-            switch_toggle(&(met->notes));
+            toggle_Notes(met);
         }
 
         else
@@ -353,10 +360,64 @@ int click(Met* met){
         default:
             printf("INVALID COUNT NUMBER\n");
     }
+
+    if(met->notesPlaying)
+        play_Note(met);
+
+    return 0;
+}
+
+int toggle_Notes(Met* met){
+    //change state of switch
+    switch_toggle(&(met->notes));
+    
+    if (met->notesPlaying)
+        stop_Note(met);
+    
+    met->notesPlaying = !(met->notesPlaying);
+
     return 0;
 }
 
 int play_Note(Met* met){
+    if(met->count == 1){
+        //new random note        
+        met->currentNote = met->nextNote;
+        while (met->currentNote == met->nextNote)
+            met->nextNote = (rand() % 7) + 1; 
+
+        switch(met->currentNote){
+            case 0:
+                break;
+            case 1:
+                Mix_PlayChannel(5, met->note_C, 0);
+                break;
+            case 2:
+                Mix_PlayChannel(5, met->note_D, 0);
+                break;
+            case 3:
+                Mix_PlayChannel(5, met->note_E, 0);
+                break;
+            case 4:
+                Mix_PlayChannel(5, met->note_F, 0);
+                break;
+            case 5:
+                Mix_PlayChannel(5, met->note_G, 0);
+                break;
+            case 6:
+                Mix_PlayChannel(5, met->note_A, 0);
+                break;
+            case 7:
+                Mix_PlayChannel(5, met->note_B, 0);
+                break;
+        }
+    }
+    return 0;
+}
+
+int stop_Note(Met* met){
+    Mix_HaltChannel(NOTE_CHANNEL);
+    met->currentNote = met->nextNote =  0;
     return 0;
 }
 
@@ -383,6 +444,7 @@ int start_stop(Met* met){
         timer_stop(&(met->timer));
         met->count = 0;
         switch_toggle(&(met->play));
+        stop_Note(met);
     }
 
     return 0;

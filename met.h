@@ -50,6 +50,7 @@ struct Met_t{ //remember to change default value in met.c
     //note stuff
     int currentNote;
     int nextNote;
+    bool notesPlaying;
 
     Mix_Chunk* note_A;
     Mix_Chunk* note_B;
@@ -79,6 +80,10 @@ int drawCount(Met* met);
 int drawDatsun(Met* met);
 int drawBPM(Met* met);
 int drawNotes(Met* met);
+
+int toggle_Notes(Met* met);
+int play_Note(Met* met);
+int stop_Note(Met* met);
 
 int min(int i, int min);
 int max(int i, int max);

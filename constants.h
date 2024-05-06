@@ -45,5 +45,7 @@
 #define NOTE_G_PATH "./sounds/G.wav"
 #define NOTE_GSH_PATH "./sounds/G#.wav"
 
+#define NOTE_CHANNEL 5
+
 
 #endif
