@@ -332,25 +332,25 @@ int drawNotes(Met* met){
             case 0:
                 break;
             case 1:
-                drawNote(met->renderer, met->tex_A, a, c);
-                break;
-            case 2:
-                drawNote(met->renderer, met->tex_B, a, c);
-                break;
-            case 3:
                 drawNote(met->renderer, met->tex_C, a, c);
                 break;
-            case 4:
+            case 2:
                 drawNote(met->renderer, met->tex_D, a, c);
                 break;
-            case 5:
+            case 3:
                 drawNote(met->renderer, met->tex_E, a, c);
                 break;
-            case 6:
+            case 4:
                 drawNote(met->renderer, met->tex_F, a, c);
                 break;
-            case 7:
+            case 5:
                 drawNote(met->renderer, met->tex_G, a, c);
+                break;
+            case 6:
+                drawNote(met->renderer, met->tex_A, a, c);
+                break;
+            case 7:
+                drawNote(met->renderer, met->tex_B, a, c);
                 break;
             default:
                 printf("INVALID NEXT NOTE VALUE\n");
@@ -472,8 +472,9 @@ int play_Note(Met* met){
     if(met->count == 1){
         //new random note        
         met->currentNote = met->nextNote;
-        while (met->currentNote == met->nextNote)
-            met->nextNote = (rand() % 7) + 1; 
+        while (met->currentNote == met->nextNote){
+            met->nextNote = (rand() % 7) + 1;
+        } 
 
         switch(met->currentNote){
             case 0:
