@@ -8,8 +8,8 @@
 SDL_Color g_white = {0xFF, 0xFF, 0xFF};
 
 
-Met met_default =
-    {.window = NULL,
+Met met_default ={
+    .window = NULL,
     .e = 0,
     .renderer = NULL,
     .timer = TIMER_OFF,
@@ -48,7 +48,15 @@ Met met_default =
     .note_D = NULL,
     .note_E = NULL,
     .note_F = NULL,
-    .note_G = NULL
+    .note_G = NULL,
+
+    .tex_A = NULL,
+    .tex_B = NULL,
+    .tex_C = NULL,
+    .tex_D = NULL,
+    .tex_E = NULL,
+    .tex_F = NULL,
+    .tex_G = NULL
     };
 
 
@@ -109,6 +117,7 @@ int setup(Met* met){
     met->datsun_sound = Mix_LoadWAV(DATSUN_SOUND_PATH);
     met->drake_sound = Mix_LoadWAV(DRAKE_SOUND_PATH);
 
+    //note stuff
     met->note_A = Mix_LoadWAV(NOTE_A_PATH);
     met->note_B = Mix_LoadWAV(NOTE_B_PATH);
     met->note_C = Mix_LoadWAV(NOTE_C_PATH);
@@ -116,6 +125,14 @@ int setup(Met* met){
     met->note_E = Mix_LoadWAV(NOTE_E_PATH);
     met->note_F = Mix_LoadWAV(NOTE_F_PATH);
     met->note_G = Mix_LoadWAV(NOTE_G_PATH);
+
+    met->tex_A = textureFromText(met->renderer, met->big_font, g_white, "A");
+    met->tex_B = textureFromText(met->renderer, met->big_font, g_white, "B");
+    met->tex_C = textureFromText(met->renderer, met->big_font, g_white, "C");
+    met->tex_D = textureFromText(met->renderer, met->big_font, g_white, "D");
+    met->tex_E = textureFromText(met->renderer, met->big_font, g_white, "E");
+    met->tex_F = textureFromText(met->renderer, met->big_font, g_white, "F");
+    met->tex_G = textureFromText(met->renderer, met->big_font, g_white, "G");
 
     //timer don't start on open
     //timer_start(&(met->timer), met->bpm);
@@ -183,6 +200,7 @@ int drawCount(Met* met){
     switch(met->count){
         case 0: //met paused
             t = met->count_1;
+            break;
         case 1:
             t = met->count_1;
             break;
@@ -197,6 +215,7 @@ int drawCount(Met* met){
             break;
         default:
             printf("INVALID CASE IN DRAWCOUNT\n");
+            break;
 
     }
     int x, y, w1, h1;
@@ -275,9 +294,79 @@ int drawNotes(Met* met){
     SDL_Rect box1 = {.x=x1, .y=y1, .w=w1, .h=h1};
     SDL_RenderCopy(met->renderer, met->notes.current_tex, NULL, &box1);    
 
+    if (met->notesPlaying){
+        int a = x -250;
+        int b = -20;
+        int c = 270;
+
+        switch(met->currentNote){
+            case 0:
+                break;
+            case 1:
+                drawNote(met->renderer, met->tex_C, a, b);
+                break;
+            case 2:
+                drawNote(met->renderer, met->tex_D, a, b);
+                break;
+            case 3:
+                drawNote(met->renderer, met->tex_E, a, b);
+                break;
+            case 4:
+                drawNote(met->renderer, met->tex_F, a, b);
+                break;
+            case 5:
+                drawNote(met->renderer, met->tex_G, a, b);
+                break;
+            case 6:
+                drawNote(met->renderer, met->tex_A, a, b);
+                break;
+            case 7:
+                drawNote(met->renderer, met->tex_B, a, b);
+                break;
+            default:
+                printf("INVALID current NOTE VALUE\n");
+                break;
+        }
+
+        switch(met->nextNote){
+            case 0:
+                break;
+            case 1:
+                drawNote(met->renderer, met->tex_A, a, c);
+                break;
+            case 2:
+                drawNote(met->renderer, met->tex_B, a, c);
+                break;
+            case 3:
+                drawNote(met->renderer, met->tex_C, a, c);
+                break;
+            case 4:
+                drawNote(met->renderer, met->tex_D, a, c);
+                break;
+            case 5:
+                drawNote(met->renderer, met->tex_E, a, c);
+                break;
+            case 6:
+                drawNote(met->renderer, met->tex_F, a, c);
+                break;
+            case 7:
+                drawNote(met->renderer, met->tex_G, a, c);
+                break;
+            default:
+                printf("INVALID NEXT NOTE VALUE\n");
+                break;
+        }
+    }
     return 0;
 }
 
+int drawNote(SDL_Renderer* ren, SDL_Texture* tex, int x, int y){
+    int w, h;
+    SDL_QueryTexture(tex, NULL, NULL, &w, &h);
+    SDL_Rect box = {.x=x, .y=y, .w=w, .h=h};
+    SDL_RenderCopy(ren, tex, NULL, &box);
+    return 0;
+}
 
 //event stuff
 bool eventHandle(Met* met){
@@ -409,6 +498,9 @@ int play_Note(Met* met){
                 break;
             case 7:
                 Mix_PlayChannel(5, met->note_B, 0);
+                break;
+            default:
+                printf("INVALID NOTE VALUE\n");
                 break;
         }
     }

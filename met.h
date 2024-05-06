@@ -11,7 +11,7 @@
 #include "widgets.h"
 
 
-struct Met_t{ //remember to change default value in met.c
+struct Met_t { //remember to change default value in met.c
     SDL_Window* window;
     SDL_Event e;
     SDL_Renderer* renderer;
@@ -59,6 +59,14 @@ struct Met_t{ //remember to change default value in met.c
     Mix_Chunk* note_E;
     Mix_Chunk* note_F;
     Mix_Chunk* note_G;
+
+    SDL_Texture* tex_A;
+    SDL_Texture* tex_B;
+    SDL_Texture* tex_C;
+    SDL_Texture* tex_D;
+    SDL_Texture* tex_E;
+    SDL_Texture* tex_F;
+    SDL_Texture* tex_G;
     
 };
 
@@ -80,6 +88,7 @@ int drawCount(Met* met);
 int drawDatsun(Met* met);
 int drawBPM(Met* met);
 int drawNotes(Met* met);
+int drawNote(SDL_Renderer* ren, SDL_Texture* tex, int x, int y);
 
 int toggle_Notes(Met* met);
 int play_Note(Met* met);
