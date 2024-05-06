@@ -389,9 +389,6 @@ bool eventHandle(Met* met){
         else if (met->e.key.keysym.sym == SDLK_n) //tempo down
             toggle_Notes(met);
 
-        else {
-            stop |= true;
-        }
     }
     if(met->e.type == SDL_MOUSEBUTTONDOWN){
         int x, y;
@@ -419,9 +416,6 @@ bool eventHandle(Met* met){
             toggle_Notes(met);
         }
 
-        else
-            stop |= true;
-    }
     if(met->e.type == SDL_USEREVENT){
         click(met);
         if (met->timer != TIMER_OFF)
