@@ -415,7 +415,7 @@ bool eventHandle(Met* met){
         else if (switch_isInside(met->notes, x, y)){
             toggle_Notes(met);
         }
-
+    }
     if(met->e.type == SDL_USEREVENT){
         click(met);
         if (met->timer != TIMER_OFF)
