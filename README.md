@@ -6,6 +6,9 @@ Get it? ..Cetronome
 
 Why did I make this? idk
 
+### Visual Studio
+This is the branch with the visual studio project files and such. 
+
 ## Dependencies
 Basically just for the system calls.
 
