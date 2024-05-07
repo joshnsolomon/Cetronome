@@ -47,5 +47,6 @@
 
 #define NOTE_CHANNEL 5
 
+#define ICON_PATH "./images/icon.png"
 
 #endif

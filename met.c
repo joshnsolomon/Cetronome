@@ -2,7 +2,7 @@
 #include "constants.h"
 #include "timer.h"
 
-#include <SDL2/SDL_image.h>
+#include <SDL_image.h>
 #include <stdio.h>
 
 SDL_Color g_white = {0xFF, 0xFF, 0xFF};
@@ -10,6 +10,7 @@ SDL_Color g_white = {0xFF, 0xFF, 0xFF};
 
 Met met_default ={
     .window = NULL,
+    .icon = NULL,
     .e = 0,
     .renderer = NULL,
     .timer = TIMER_OFF,
@@ -82,6 +83,10 @@ int setup(Met* met){
         printf("could not create window: %s\n", SDL_GetError());
         return -1;
     }
+
+    //icon
+    met->icon = IMG_Load(ICON_PATH);
+    SDL_SetWindowIcon(met->window, met->icon);
 
     //renderer
     met->renderer = SDL_CreateRenderer(met->window,-1,SDL_RENDERER_ACCELERATED);

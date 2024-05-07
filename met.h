@@ -1,9 +1,9 @@
 #ifndef MET_H
 #define MET_H
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_mixer.h>
+#include <SDL.h>
+#include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include <stdbool.h>
 
 #include "constants.h"
@@ -13,6 +13,7 @@
 
 struct Met_t { //remember to change default value in met.c
     SDL_Window* window;
+    SDL_Surface* icon;
     SDL_Event e;
     SDL_Renderer* renderer;
     SDL_TimerID timer;

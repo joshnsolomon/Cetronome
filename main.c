@@ -1,6 +1,6 @@
 #include "met.h"
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -22,5 +22,5 @@ int main(int argc, char* args[]){
     }
 
     leave(met);
-    exit(EXIT_SUCCESS);
+    exit(0);
 }
