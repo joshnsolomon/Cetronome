@@ -10,6 +10,7 @@ SDL_Color g_white = {0xFF, 0xFF, 0xFF};
 
 Met met_default ={
     .window = NULL,
+    .icon = NULL,
     .e = 0,
     .renderer = NULL,
     .timer = TIMER_OFF,
@@ -83,7 +84,9 @@ int setup(Met* met){
         return -1;
     }
 
-   
+    //icon
+    met->icon = IMG_Load(ICON_PATH);
+    SDL_SetWindowIcon(met->window, met->icon); 
 
     //renderer
     met->renderer = SDL_CreateRenderer(met->window,-1,SDL_RENDERER_ACCELERATED);

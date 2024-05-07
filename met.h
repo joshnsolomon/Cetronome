@@ -13,6 +13,7 @@
 
 struct Met_t { //remember to change default value in met.c
     SDL_Window* window;
+    SDL_Surface* icon;
     SDL_Event e;
     SDL_Renderer* renderer;
     SDL_TimerID timer;
