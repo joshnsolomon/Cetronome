@@ -67,7 +67,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\jsolomon\Desktop\Code\C\Dependencies\SDL2_image-devel-2.8.2-VC\SDL2_image-2.8.2\include;C:\Users\jsolomon\Desktop\Code\C\Dependencies\SDL2_mixer-devel-2.8.0-VC\SDL2_mixer-2.8.0\include;C:\Users\jsolomon\Desktop\Code\C\Dependencies\SDL2_ttf-devel-2.22.0-VC\SDL2_ttf-2.22.0\include;C:\Users\jsolomon\Desktop\Code\C\Dependencies\SDL2-devel-2.30.3-VC\SDL2-2.30.3\include;$(IncludePath)</IncludePath>
+    <IncludePath>
+    </IncludePath>
     <LibraryPath>C:\Users\jsolomon\Desktop\Code\C\Dependencies\SDL2_image-devel-2.8.2-VC\SDL2_image-2.8.2\lib\x64;C:\Users\jsolomon\Desktop\Code\C\Dependencies\SDL2_mixer-devel-2.8.0-VC\SDL2_mixer-2.8.0\lib\x64;C:\Users\jsolomon\Desktop\Code\C\Dependencies\SDL2_ttf-devel-2.22.0-VC\SDL2_ttf-2.22.0\lib\x64;C:\Users\jsolomon\Desktop\Code\C\Dependencies\SDL2-devel-2.30.3-VC\SDL2-2.30.3\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -75,6 +76,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\jsolomon\Desktop\Code\C\Dependencies\SDL2_image-devel-2.8.2-VC\SDL2_image-2.8.2\include;C:\Users\jsolomon\Desktop\Code\C\Dependencies\SDL2_mixer-devel-2.8.0-VC\SDL2_mixer-2.8.0\include;C:\Users\jsolomon\Desktop\Code\C\Dependencies\SDL2_ttf-devel-2.22.0-VC\SDL2_ttf-2.22.0\include;C:\Users\jsolomon\Desktop\Code\C\Dependencies\SDL2-devel-2.30.3-VC\SDL2-2.30.3\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\jsolomon\Desktop\Code\C\Dependencies\SDL2_image-devel-2.8.2-VC\SDL2_image-2.8.2\lib\x64;C:\Users\jsolomon\Desktop\Code\C\Dependencies\SDL2_mixer-devel-2.8.0-VC\SDL2_mixer-2.8.0\lib\x64;C:\Users\jsolomon\Desktop\Code\C\Dependencies\SDL2_ttf-devel-2.22.0-VC\SDL2_ttf-2.22.0\lib\x64;C:\Users\jsolomon\Desktop\Code\C\Dependencies\SDL2-devel-2.30.3-VC\SDL2-2.30.3\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -119,6 +122,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -130,8 +134,49 @@
   <ItemGroup>
     <ClInclude Include="constants.h" />
     <ClInclude Include="met.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="widgets.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
+    <Image Include="images\down.png" />
+    <Image Include="images\extra\datsun.png" />
+    <Image Include="images\extra\dogs.png" />
+    <Image Include="images\icon.ico" />
+    <Image Include="images\icon.png" />
+    <Image Include="images\off.png" />
+    <Image Include="images\on.png" />
+    <Image Include="images\pause.png" />
+    <Image Include="images\play.png" />
+    <Image Include="images\up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="sounds\A#.wav" />
+    <Media Include="sounds\A.wav" />
+    <Media Include="sounds\B.wav" />
+    <Media Include="sounds\C#.wav" />
+    <Media Include="sounds\C.wav" />
+    <Media Include="sounds\D#.wav" />
+    <Media Include="sounds\D.wav" />
+    <Media Include="sounds\E.wav" />
+    <Media Include="sounds\extra\datsun.wav" />
+    <Media Include="sounds\extra\drake.wav" />
+    <Media Include="sounds\F#.wav" />
+    <Media Include="sounds\F.wav" />
+    <Media Include="sounds\G#.wav" />
+    <Media Include="sounds\G.wav" />
+    <Media Include="sounds\HAT.wav" />
+    <Media Include="sounds\KICK.wav" />
+    <Media Include="sounds\RIM.wav" />
+    <Media Include="sounds\SNARE.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="fonts\Comic Sans MS.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

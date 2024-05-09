@@ -27,30 +27,6 @@
     <ClCompile Include="widgets.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="extra\basic\helloworld.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="extra\images\example.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="extra\mixer\drummachine.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="extra\mixer\music.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="extra\timer\hellotimer.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="extra\timer\timertest.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="extra\ttf\fontexample.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="extra\ttf\hellofont.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -65,5 +41,112 @@
     <ClInclude Include="widgets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="images\icon.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\off.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\on.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\pause.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\play.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\extra\datsun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\extra\dogs.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\icon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="sounds\extra\datsun.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sounds\extra\drake.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sounds\A#.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sounds\A.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sounds\B.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sounds\C#.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sounds\C.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sounds\D#.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sounds\D.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sounds\E.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sounds\F#.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sounds\F.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sounds\G#.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sounds\G.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sounds\HAT.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sounds\KICK.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sounds\RIM.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sounds\SNARE.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="fonts\Comic Sans MS.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
